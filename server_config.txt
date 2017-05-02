@@ -1,0 +1,69 @@
+
+What's this document for?
+  Setting up the Virtual Machine for atsnp search from square one.
+
+Prerequisites:
+   The virtual machine must be accessible to your user, 
+   You will need to be 'sudo' on the VM to set things up. 
+
+A. Install a bunch of stuff
+   python, wsgi, pip, django, etc. (nginx if it's not there)
+   sudo yum install
+   DROP CONTENT HERE.
+
+B. Make a directory for my code: 
+   /var/www/atsnp-rh/
+   cd into that directory 
+
+C. Pull the code from these places.
+   ssh keys will be needed to push?
+   #Ensure that this can work for users who are not me.
+     ss_search_viewer 
+     rsss_api
+
+D. Setup the nginx configuration. 
+   (this should appear from nowhere when the server is started correctly) 
+   socket file -> wsgi should eventually put the correct permissions on it.
+
+   D0. how to do stuff to nginx:  
+       tail the nginx log file:  sudo tail -f /var/log/nginx/error.log       
+       restart nginx:            sudo systemctl restart nginx
+        
+   D1. config files for nginx.
+       There is a config file in this repo here: 
+          nginx_config/nginx.conf
+       copy/adapt it to this location: /etc/nginx/nginx.conf
+
+   D2. Setup config files for project, nginx will use these:
+       'the project dir' == /var/www/atsnp-rh/ss_search_viewer
+       1. Find the uwsgi_params file, and, if it's not already present, 
+          put it into the project dir.
+          the uwsgi_params file is located at:
+             viewer_config/uwsgi_params
+
+       2. Find the .ini file, and if it's not already present, 
+          put it into the project directory.
+          the ini file is located at:
+             viewer_config/ss_search_viewer_uwsgi.ini
+
+       3. Find the file (in this repo) viewer_config/ss_search_viewer_nginx.conf 
+          Paste this file into the project directory 
+ 
+       4. Create a symlink from the file ss_search_viewer_nginx.conf to the sites-enabled directory.
+          (This step makes the nginx configuration file accessible.)
+          sudo ln -s  /var/www/atsnp-rh/ss_search_viewer/ss_search_viewer_nginx.conf /etc/nginx/sites-enabled 
+
+E. Setup the 
+
+
+
+    4. Try to start up the server agian.
+       (sudo systemctl restart nginx)       
+ 
+
+
+
+
+
+
+
